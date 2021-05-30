@@ -1,0 +1,601 @@
+{
+    "swagger": "2.0",
+    "components": {
+        "securitySchemes": {
+          "jwt": {
+            "type": "http",
+            "scheme": "bearer",
+            "in": "header",
+            "bearerFormat": "JWT"
+          }
+        }
+      },
+    "security": [{
+    "jwt": []
+    }],
+    "info": {
+        "description": "This is a simple example NodeJS API project to demonstrate Swagger Documentation",
+        "version": "1.0.0",
+        "title": "SOCIAL MEDIA API",
+        "contact": {
+            "email": "abc@gmail.com"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        }
+    },
+    "schemes": ["http"],
+    "host": "localhost:3000",
+    "basePath": "/api/v1",
+    "paths" : {
+        "/create-user" : {
+            "post" : {
+                "summary" : "Create the user",
+                "tags": ["User"],
+                "description": "Create the user",
+                "produces": ["application/json"],
+                "consumes": ["application/json"],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "user object",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/User"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User created successfully!"
+                    },
+                    "500": {
+                        "description": "Invalid status value"
+                    }
+                }
+            }
+        },
+        "/login" : {
+            "post" : {
+                "summary" : "User Login",
+                "tags": ["User"],
+                "description": "User Login",
+                "produces": ["application/json"],
+                "consumes": ["application/json"],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "user object",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/User-Login"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User Logged-in successfully!"
+                    },
+                    "500": {
+                        "description": "Invalid status value"
+                    }
+                }
+            }
+        },
+        "/forgot-password" : {
+            "post" : {
+                "summary" : "Forgot the user password",
+                "tags": ["User"],
+                "description": "Forgot the user password",
+                "produces": ["application/json"],
+                "consumes": ["application/json"],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "user object",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Forgot-Password"
+                        }
+                    }
+                ],
+                "security": [ { "bearerAuth": [] } ],
+                "responses": {
+                    "200": {
+                        "description": "Otp sent successfully!"
+                    },
+                    "500": {
+                        "description": "Invalid status value"
+                    }
+                }
+            }
+        },
+        "/reset-password" : {
+            "post" : {
+                "summary" : "Reset the user password",
+                "tags": ["User"],
+                "description": "Reset the user password",
+                "produces": ["application/json"],
+                "consumes": ["application/json"],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "user object",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Reset-Password"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "password updated successfully!"
+                    },
+                    "500": {
+                        "description": "Invalid status value"
+                    }
+                }
+            }
+        },
+        "/updateProfile/{id}": {
+            "post": {
+                "summary" : "Update the profile",
+                "tags": ["User"],
+                "description": "Update the profile",
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "profile id that needs to be updated",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "user object",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/User"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Invalid status value"
+                    }
+                }
+            }
+        },
+        "/getProfile": {
+            "get": {
+                "summary" : "Get the profile",
+                "tags":["User"],
+                "description": "Get the profile",
+                "produces": ["application/json"],
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Invalid status value"
+                    }
+                }
+            }
+        },
+        "/getUsers": {
+            "get": {
+                "summary" : "Get the users list",
+                "tags":["User"],
+                "description": "Get the users list",
+                "produces": ["application/json"],
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Invalid status value"
+                    }
+                }
+            }
+        },
+        "/getUserById/{id}": {
+            "get": {
+                "summary" : "Get the user by Id",
+                "tags":["User"],
+                "description": "Get the user by Id",
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "user id to get the info",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Invalid status value"
+                    }
+                }
+            }
+        },
+        "/requestFriend": {
+            "post" : {
+                "summary" : "send request to the friend",
+                "tags": ["User"],
+                "description": "send request to the friend",
+                "produces": ["application/json"],
+                "consumes": ["application/json"],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "user object",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Send-Request"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "request sent successfully!"
+                    },
+                    "500": {
+                        "description": "Invalid status value"
+                    }
+                }
+            }
+        },
+        "/getFriendRequests": {
+            "get": {
+                "summary" : "Get the users friend requests",
+                "tags":["User"],
+                "description": "Get the users friend requests",
+                "produces": ["application/json"],
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Invalid status value"
+                    }
+                }
+            }
+        },
+        "/respondRequest/{requestId}": {
+            "post": {
+                "summary" : "respond to the friend requests",
+                "tags": ["User"],
+                "description": "respond to the friend requests",
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "requestId",
+                        "in": "path",
+                        "description": "request id that needs to be updated",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "user object",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Respond-Request"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Invalid status value"
+                    }
+                }
+            }
+        },
+        "/myFriends": {
+            "get": {
+                "summary" : "Get the friends list",
+                "tags":["User"],
+                "description": "Get the friends list",
+                "produces": ["application/json"],
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Invalid status value"
+                    }
+                }
+            }
+        },
+        "/removeFriend/{friendId}": {
+            "get": {
+                "summary" : "Remove the friend",
+                "tags": ["User"],
+                "description": "Remove the friend",
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "friendId",
+                        "in": "path",
+                        "description": "user id that needs to be updated",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Invalid status value"
+                    }
+                }
+            }
+        },
+        "/mutualFriends/{friendId}": {
+            "get": {
+                "summary" : "Get the mutual friends",
+                "tags": ["User"],
+                "description": "Get the mutual friends",
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "friendId",
+                        "in": "path",
+                        "description": "user id that needs to be updated",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Invalid status value"
+                    }
+                }
+            }
+        },
+        "/friendsOfFriends": {
+            "get": {
+                "summary" : "Get friends of friends list",
+                "tags":["User"],
+                "description": "Get friends of friends list",
+                "produces": ["application/json"],
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Invalid status value"
+                    }
+                }
+            }
+        },
+        "/create-post": {
+            "post" : {
+                "summary" : "Create the post",
+                "tags": ["Post"],
+                "description": "Create the post",
+                "produces": ["application/json"],
+                "consumes": ["application/json"],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "user object",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Create-Post"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Post created successfully!"
+                    },
+                    "500": {
+                        "description": "Invalid status value"
+                    }
+                }
+            }
+        },
+        "/delete-post/{id}": {
+            "get": {
+                "summary" : "Delete the Post",
+                "tags": ["Post"],
+                "description": "Delete the Post",
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "post that needs to be updated",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Invalid status value"
+                    }
+                }
+            }
+        },
+        "/sendMessage/{friendId}": {
+            "post": {
+                "summary" : "Send the message to the user",
+                "tags": ["Chat"],
+                "description": "Send the message to the user",
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "friendId",
+                        "in": "path",
+                        "description": "user id that needs to send message",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "user object",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Send-Message"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Invalid status value"
+                    }
+                }
+            }
+        },
+        "/viewMessages/{friendId}": {
+            "get": {
+                "summary" : "Get the messages",
+                "tags": ["Chat"],
+                "description": "Get the messages",
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "friendId",
+                        "in": "path",
+                        "description": "user id to get the messages",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Invalid status value"
+                    }
+                }
+            }
+        }
+    }, 
+    "definitions": {
+        "Forgot-Password": {
+            "type": "object",
+            "properties": {
+                "mobileNumber": {
+                    "type": "string"
+                }
+            }
+        },
+        "User": {
+            "type": "object",
+            "properties": {
+                "username": {
+                    "type": "string"
+                },
+                "mobileNumber": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                }
+            }
+        },
+        "User-Login": {
+            "type": "object",
+            "properties": {
+                "username": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                }
+            }
+        },
+        "Reset-Password": {
+            "type": "object",
+            "properties": {
+                "mobileNumber": {
+                    "type": "string"
+                },
+                "otp": {
+                    "type":"string"
+                },
+                "password": {
+                    "type":"string"
+                }
+            }
+        },
+        "Send-Request": {
+            "type": "object",
+            "properties": {
+                "recipientId": {
+                    "type":"string"
+                }
+            }
+        },
+        "Respond-Request": {
+            "type": "object",
+            "properties": {
+                "senderId": {
+                    "type":"string"
+                },
+                "status": {
+                    "type":"string"
+                }
+            }
+        },
+        "Create-Post": {
+            "type": "object",
+            "properties": {
+                "content": {
+                    "type": "string"
+                }
+            }
+        },
+        "Send-Message": {
+            "type": "object",
+            "properties": {
+                "text": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
